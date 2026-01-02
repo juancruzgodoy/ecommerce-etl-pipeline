@@ -43,3 +43,35 @@ Generación de dos tipos de salidas en la carpeta `output/`:
 ├── etl.py                 # Script principal del pipeline
 ├── .gitignore             # Configuración de archivos ignorados
 └── README.md              # Documentación del proyecto
+```
+## Cómo ejecutar este proyecto
+
+Sigue estos pasos para correr el pipeline en tu entorno local:
+
+1. **Clonar el repositorio:**
+   ```bash
+   git clone [https://github.com/TU_USUARIO/ecommerce-etl-pipeline.git](https://github.com/TU_USUARIO/ecommerce-etl-pipeline.git)
+   cd ecommerce-etl-pipeline
+   ```
+
+2. **Crear y activar un entorno virtual:**
+   ```bash
+   # Windows
+   python -m venv venv
+   .\venv\Scripts\activate
+
+   # Mac/Linux
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+
+3. **Instalar dependencias:**
+   ```bash
+   pip install pandas pyarrow
+   ```
+
+4. **Ejecutar el pipeline:**
+   ```bash
+   python etl.py
+   ```
+   *Verás los logs en la terminal y los archivos generados aparecerán automáticamente en la carpeta `output/`.*
