@@ -50,7 +50,7 @@ Sigue estos pasos para correr el pipeline en tu entorno local:
 
 1. **Clonar el repositorio:**
    ```bash
-   git clone [https://github.com/TU_USUARIO/ecommerce-etl-pipeline.git](https://github.com/TU_USUARIO/ecommerce-etl-pipeline.git)
+   git clone https://github.com/juancruzgodoy/ecommerce-etl-pipeline
    cd ecommerce-etl-pipeline
    ```
 
