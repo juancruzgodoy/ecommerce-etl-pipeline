@@ -75,3 +75,18 @@ Sigue estos pasos para correr el pipeline en tu entorno local:
    python etl.py
    ```
    *Verás los logs en la terminal y los archivos generados aparecerán automáticamente en la carpeta `output/`.*
+
+## Cómo correr con Docker
+
+Si no querés instalar Python ni configurar entornos, podés correr este proyecto usando Docker.
+
+1. **Construir la imagen:**
+   ```bash
+   docker build -t etl-image .
+   ```
+
+2. **Ejecutar el ETL:** Este comando corre el script y guarda los resultados en tu carpeta output local.
+
+    ```bash
+    docker run -v ${PWD}/output:/app/output etl-image
+    ```
