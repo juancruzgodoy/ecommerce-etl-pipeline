@@ -37,12 +37,15 @@ Generación de dos tipos de salidas en la carpeta `output/`:
 ## Estructura del Proyecto
 
 ```text
-├── data/                  # Archivos CSV de entrada (Source)
-├── output/                # Archivos generados por el script (Target) - Ignorado en git
-├── venv/                  # Entorno virtual - Ignorado en git
-├── etl.py                 # Script principal del pipeline
-├── .gitignore             # Configuración de archivos ignorados
-└── README.md              # Documentación del proyecto
+├── data/              # Archivos CSV de entrada (Source) - Ignorado en git
+├── output/            # Archivos generados por el script (Target) - Ignorado en git
+├── venv/              # Entorno virtual - Ignorado en git
+├── .dockerignore      # Archivos excluidos del contexto de Docker
+├── .gitignore         # Configuración de archivos ignorados
+├── Dockerfile         # Definición de la imagen Docker para el pipeline
+├── etl.py             # Script principal del pipeline
+├── README.md          # Documentación del proyecto
+└── requirements.txt   # Lista de dependencias del proyecto
 ```
 ## Cómo ejecutar este proyecto
 
