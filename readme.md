@@ -4,17 +4,20 @@ Este proyecto simula un proceso **ETL (Extract, Transform, Load)** completo para
 El objetivo es ingerir datos crudos de ventas, limpiarlos, transformarlos para obtener métricas de negocio y cargarlos en formatos optimizados para su posterior análisis.
 
 ## Tecnologías Utilizadas
-* **Python 3.x**: Lenguaje principal.
-* **Pandas**: Manipulación y análisis de datos.
-* **PyArrow/Parquet**: Almacenamiento columnar eficiente.
+## Tecnologías Utilizadas
+* **Python 3.10+**: Lenguaje principal.
+* **Pandas**: Procesamiento de datos en memoria.
+* **AWS S3**: Almacenamiento en la nube (Data Lake).
+* **Boto3 / s3fs**: Conexión y manipulación de objetos en S3.
+* **PyArrow**: Motor para escritura eficiente de archivos Parquet.
+* **Python-Dotenv**: Gestión de variables de entorno y secretos.
 
 ## Arquitectura del Pipeline
 
 El script `etl.py` ejecuta los siguientes pasos secuenciales:
 
-### 1. Extract (Extracción)
-* Ingesta de datos desde archivos CSV crudos (`orders`, `order_items`, `products`).
-* Verificación inicial de estructuras y tipos de datos.
+### 1. Extract (Raw Layer)
+El script se conecta a un Bucket S3 y lee los archivos CSV crudos directamente desde la carpeta `raw/` utilizando `s3fs`.
 
 ### 2. Transform (Transformación y Limpieza)
 * **Manejo de Nulos:** Estrategia de rellenado (*fillna*) para no perder registros históricos (ej: promociones vacías).
@@ -28,7 +31,7 @@ Se programó la lógica para responder preguntas clave de la gerencia:
 * **Tendencias:** Análisis de la evolución de ingresos mes a mes (Agrupación temporal).
 
 ### 4. Load (Carga)
-Generación de dos tipos de salidas en la carpeta `output/`:
+Los resultados se escriben directamente en la carpeta `processed/` del Bucket S3 en dos formatos:
 * **Reportes en CSV:** Para consumo directo del equipo de negocio/Excel.
 * **Tablas Limpias en Parquet:** Formato columnar comprimido, optimizado para futuros procesos de Big Data o Machine Learning.
 
@@ -37,47 +40,57 @@ Generación de dos tipos de salidas en la carpeta `output/`:
 ## Estructura del Proyecto
 
 ```text
-├── data/              # Archivos CSV de entrada (Source) - Ignorado en git
-├── output/            # Archivos generados por el script (Target) - Ignorado en git
 ├── venv/              # Entorno virtual - Ignorado en git
 ├── .dockerignore      # Archivos excluidos del contexto de Docker
 ├── .gitignore         # Configuración de archivos ignorados
+├── config.py          # Configuración de infraestructura y rutas S3
 ├── Dockerfile         # Definición de la imagen Docker para el pipeline
 ├── etl.py             # Script principal del pipeline
 ├── README.md          # Documentación del proyecto
 └── requirements.txt   # Lista de dependencias del proyecto
 ```
-## Cómo ejecutar este proyecto
+# Cómo ejecutar este proyecto
 
 Sigue estos pasos para correr el pipeline en tu entorno local:
 
-1. **Clonar el repositorio:**
-   ```bash
-   git clone https://github.com/juancruzgodoy/ecommerce-etl-pipeline
-   cd ecommerce-etl-pipeline
-   ```
+1.  **Clonar el repositorio:**
+    ```bash
+    git clone [https://github.com/juancruzgodoy/ecommerce-etl-pipeline](https://github.com/juancruzgodoy/ecommerce-etl-pipeline)
+    cd ecommerce-etl-pipeline
+    ```
 
-2. **Crear y activar un entorno virtual:**
-   ```bash
-   # Windows
-   python -m venv venv
-   .\venv\Scripts\activate
+2.  **Crear y activar un entorno virtual:**
+    Es recomendable para aislar las librerías del proyecto.
+    ```bash
+    # Windows
+    python -m venv venv
+    .\venv\Scripts\activate
 
-   # Mac/Linux
-   python3 -m venv venv
-   source venv/bin/activate
-   ```
+    # Mac/Linux
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
 
-3. **Instalar dependencias:**
-   ```bash
-   pip install pandas pyarrow
-   ```
+3.  **Instalar dependencias:**
+    Ahora utilizamos `requirements.txt` para instalar todo lo necesario (Pandas, S3fs, PyArrow, Dotenv, etc.).
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-4. **Ejecutar el pipeline:**
-   ```bash
-   python etl.py
-   ```
-   *Verás los logs en la terminal y los archivos generados aparecerán automáticamente en la carpeta `output/`.*
+4.  **Configurar Variables de Entorno (.env):**
+    Crea un archivo llamado `.env` en la raíz del proyecto y agrega tus credenciales de AWS (este archivo es ignorado por git por seguridad).
+
+    ```env
+    AWS_ACCESS_KEY_ID=tu_access_key_aqui
+    AWS_SECRET_ACCESS_KEY=tu_secret_key_aqui
+    AWS_BUCKET_NAME=nombre-de-tu-bucket
+    ```
+
+5.  **Ejecutar el pipeline:**
+    ```bash
+    python etl.py
+    ```
+    *Verás los logs en la terminal indicando la conexión a AWS. Los archivos procesados y reportes aparecerán automáticamente en la carpeta `processed/` de tu bucket S3.*
 
 ## Cómo correr con Docker
 
