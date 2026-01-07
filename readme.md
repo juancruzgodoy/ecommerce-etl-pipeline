@@ -4,7 +4,7 @@ Este proyecto simula un proceso **ETL (Extract, Transform, Load)** completo para
 El objetivo es ingerir datos crudos de ventas, limpiarlos, transformarlos para obtener métricas de negocio y cargarlos en formatos optimizados para su posterior análisis.
 
 ## Tecnologías Utilizadas
-## Tecnologías Utilizadas
+
 * **Python 3.10+**: Lenguaje principal.
 * **Pandas**: Procesamiento de datos en memoria.
 * **AWS S3**: Almacenamiento en la nube (Data Lake).
