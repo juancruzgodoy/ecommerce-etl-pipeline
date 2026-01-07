@@ -8,6 +8,7 @@ El objetivo es ingerir datos crudos de ventas, limpiarlos, transformarlos para o
 * **Python 3.10+**: Lenguaje principal.
 * **Pandas**: Procesamiento de datos en memoria.
 * **AWS S3**: Almacenamiento en la nube (Data Lake).
+* **Docker**: Reproducible en cualquier entorno
 * **Boto3 / s3fs**: Conexión y manipulación de objetos en S3.
 * **PyArrow**: Motor para escritura eficiente de archivos Parquet.
 * **Python-Dotenv**: Gestión de variables de entorno y secretos.
